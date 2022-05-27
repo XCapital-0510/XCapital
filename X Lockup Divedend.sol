@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicensed
-pragma solidity >=0.6.8;
+pragma solidity >=0.6.8.0000;
 pragma experimental ABIEncoderV2;
 
 interface IBEP20 {
