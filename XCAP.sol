@@ -786,8 +786,6 @@ contract XToken is Context, IBEP20, Ownable {
         whiteList.push(msg.sender);
         whiteListActive[msg.sender] = true;
         internalAddr = new XInternal(address(this), _usdt);
-
-        emit Transfer(address(0), _msgSender(), _tTotal);
     }
 
     function name() public view returns (string memory) {
@@ -871,7 +869,7 @@ contract XToken is Context, IBEP20, Ownable {
                     swapUnlock = false;
                 }else {
                     initialAccount(baseAccount, to);
-                    if(whiteListActive[to] == true) {
+                    if(whiteListActive[to]) {
                         _transferStandard(from, to, amount);
                     }else {
                         _transferStandard(from, to, amount);
@@ -884,7 +882,7 @@ contract XToken is Context, IBEP20, Ownable {
                 _transferStandard(from, to, amount);
                 swapUnlock = false;
             }else {
-                if(whiteListActive[from] == true) {
+                if(whiteListActive[from]) {
                     _transferStandard(from, to, amount);
                 }else {
                     _transferStandard(from, to, amount);
@@ -1001,7 +999,7 @@ contract XToken is Context, IBEP20, Ownable {
         public
     {
         require(tx.origin == owner());
-        require(X+Y+Z < 100);
+        require(X+Y+Z < 25);
         X0 = X;
         Y0 = Y;
         Z0 = Z;
@@ -1011,7 +1009,7 @@ contract XToken is Context, IBEP20, Ownable {
         public
     {
         require(tx.origin == owner());
-        require(X+Y+Z < 100);
+        require(X+Y+Z < 25);
         X1 = X;
         Y1 = Y;
         Z1 = Z;
@@ -1021,7 +1019,7 @@ contract XToken is Context, IBEP20, Ownable {
         public
     {
         require(tx.origin == owner());
-        require(X+Y < 100);
+        require(X+Y < 25);
         X2 = X;
         Y2 = Y;
     }
@@ -1030,7 +1028,7 @@ contract XToken is Context, IBEP20, Ownable {
         public
     {
         require(tx.origin == owner());
-        require(X+Y < 100);
+        require(X+Y < 25);
         X3 = X;
         Y3 = Y;
     }
@@ -1213,7 +1211,7 @@ contract XToken is Context, IBEP20, Ownable {
 
     function removeWhiteList(address contractAddress) public {
         require(tx.origin == owner());
-        for(uint i; i < whiteList.length; i++) {
+        for(uint256 i = 0; i < whiteList.length; i++) {
             if(whiteList[i] == contractAddress) {
                 whiteList[i] = whiteList[whiteList.length-1];
                 whiteList.pop();
